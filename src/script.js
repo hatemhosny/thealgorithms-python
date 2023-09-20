@@ -22,7 +22,7 @@ const addTestRunner = (code) => {
     .split("\n")
     .map((line) => `# ${line}`)
     .join("\n");
-  const runner = "\n\nimport doctest\ndoctest.testmod(verbose=True)\n";
+  const runner = "\n\nimport doctest\ndoctest.testmod(verbose=True)\n# __livecodes_reload__\n";
   return `${part0}# ${sep}${comment}${runner}`;
 };
 
