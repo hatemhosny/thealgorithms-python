@@ -17,13 +17,14 @@ const getContent = async (url) => {
 
 const addTestRunner = (code) => {
   const sep = 'if __name__ == "__main__":\n';
-  const [part0, part1] = code.split(sep);
-  const comment = part1
-    .split("\n")
-    .map((line) => `# ${line}`)
-    .join("\n");
-  const runner = "\n\nimport doctest\ndoctest.testmod(verbose=True)\n# __livecodes_reload__\n";
-  return `${part0}# ${sep}${comment}${runner}`;
+  const [algCode, run] = code.split(sep);
+  const comment =
+    run
+      ?.split("\n")
+      .map((line) => `# ${line}`)
+      .join("\n") || "";
+  const testRunner = `\n    import doctest\n    doctest.testmod(verbose=True)`;
+  return `${algCode}${sep}${comment}${testRunner}`;
 };
 
 const loadAlgorithm = async () => {
@@ -54,7 +55,7 @@ const loadAlgorithm = async () => {
 
   if (!playground) {
     playground = await createPlayground("#container", {
-      appUrl: "https://v14.livecodes.io/",
+      appUrl: "https://dev.livecodes.io/",
       config,
     });
   } else {
